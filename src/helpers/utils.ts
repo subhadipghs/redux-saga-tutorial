@@ -1,5 +1,8 @@
-
-
+/**
+ * Generate action types object
+ * @param type - the types of action as string constants
+ * @returns object containing the action types
+ */
 export const createActionTypes = (type: string[]) : Record<string, string> => {
   return type.reduce((prev, current) => {
     return {
@@ -9,7 +12,20 @@ export const createActionTypes = (type: string[]) : Record<string, string> => {
   }, {});
 }
 
+/**
+ * Check if the running on browser environment
+ */
+export const isBrowserEnv : boolean = typeof window !== "undefined"
 
+
+/**
+ * Check if running on production environment
+ */
+export const isProductionEnv = process.env.NODE_ENV === "production"
+
+/**
+ * API Request manager
+ */
 export class ApiRequest {
 
   static instance = new ApiRequest()
