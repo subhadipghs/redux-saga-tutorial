@@ -1,32 +1,33 @@
-import { ActionType, AsyncStatus } from "../../types/store"
-import { PostsAction, PostsStateT } from "./posts.types"
+import { ActionType, AsyncStatus } from "../../types/store";
+import { PostsAction, PostsStateT } from "./posts.types";
 
-
-const postInitialState : PostsStateT = {
+const postInitialState: PostsStateT = {
   status: AsyncStatus.idle,
+  number: 0,
   post: null,
-  error: '',
-  fetchedAt: null
-}
+  error: "",
+  fetchedAt: null,
+};
 
-
-const postsReducer = (state : PostsStateT = postInitialState, action: ActionType<string>) => {
-  switch(action.type) {
-
+const postsReducer = (
+  state: PostsStateT = postInitialState,
+  action: ActionType<string>
+) => {
+  switch (action.type) {
     /** When user request */
     case PostsAction.POST_FETCH_REQUESTED: {
       return {
         ...state,
-        status: AsyncStatus.requested
-      }
+        status: AsyncStatus.requested,
+      };
     }
-    
+
     /** Start fetching the posts */
     case PostsAction.START_FETCHING: {
       return {
         ...state,
-        status: AsyncStatus.fetching
-      }
+        status: AsyncStatus.fetching,
+      };
     }
 
     /** fetching complete */
@@ -35,8 +36,8 @@ const postsReducer = (state : PostsStateT = postInitialState, action: ActionType
         ...state,
         post: action.payload.posts,
         status: AsyncStatus.completed,
-        fetchedAt: new Date().toLocaleDateString()
-      }
+        fetchedAt: new Date().toLocaleDateString(),
+      };
     }
 
     /** posts fetch failure */
@@ -44,16 +45,29 @@ const postsReducer = (state : PostsStateT = postInitialState, action: ActionType
       return {
         ...state,
         error: action.payload.message,
-        status: AsyncStatus.error
-      }
+        status: AsyncStatus.error,
+      };
+    }
+
+    case PostsAction.POST_SET_WATCH_NUMBER: {
+      return {
+        ...state,
+        number: action.payload.number,
+        status: AsyncStatus.completed,
+      };
+    }
+
+    case PostsAction.POST_GET_WATCH_NUMBER: {
+      return {
+        ...state,
+        status: AsyncStatus.fetching,
+      };
     }
 
     default: {
-      return state
+      return state;
     }
   }
-}
+};
 
-
-
-export { postsReducer }
+export { postsReducer };

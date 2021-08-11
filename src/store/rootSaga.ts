@@ -1,14 +1,11 @@
-import createSagaMiddleware from "@redux-saga/core"
+import createSagaMiddleware from "@redux-saga/core";
 import { all } from "redux-saga/effects";
-import { postSaga } from "./posts/posts.saga"
+import { postSaga, randSaga } from "./posts/posts.saga";
 
-const sagaMiddleware = createSagaMiddleware()
+const sagaMiddleware = createSagaMiddleware();
 
-function *rootSaga() {
-  yield all([
-    postSaga()
-  ]);
+function* rootSaga() {
+  yield all([postSaga(), randSaga()]);
 }
 
-
-export { sagaMiddleware, rootSaga }
+export { sagaMiddleware, rootSaga };
